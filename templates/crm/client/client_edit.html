@@ -1,0 +1,61 @@
+{% extends "../base.html" %}
+
+{% block page_title %}Clients {% endblock page_title %}
+
+{% block title %}Client / Edit Client{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-center">Edit Client</h5>
+              <form class="row g-3" action="" method="post">{% csrf_token %}
+                <div class="col-12">
+                  <label  class="form-label">Client Name</label>
+                  {{ form.name }}
+                </div>
+                <div class="col-12">
+                  <label  class="form-label">Email</label>
+                  {{ form.email }}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Phone Number</label>
+                  {{ form.phone_number }}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Address</label>
+                  {{ form.address }}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Facebook</label>
+                  {{ form.facebook }}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Instagram</label>
+                  {{ form.instagram }}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Twitter</label>
+                  {{ form.twitter }}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Linkedin</label>
+                  {{ form.linkedin }}
+                </div>
+                <div class="text-center">
+                    <a href="{% url 'list_client' %}" class="btn btn-secondary">Back</a>
+                    <button type="submit" class="btn btn-info">Update</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                </div>
+        
+            </div>
+          </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+{% endblock content %}
+
+
+

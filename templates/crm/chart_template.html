@@ -1,0 +1,46 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Products</h5>
+            <div class="activity">
+                <canvas id="productChart" width="300" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Get data from Django context
+    let dataFromDjango = JSON.parse('{{ data | escapejs }}');
+    let labels = [];
+    let quantities = [];
+    dataFromDjango.forEach(function(item) {
+        labels.push(item.name);
+        quantities.push(item.quantity_left);
+    });
+
+    // Render the chart
+    const ctx = document.getElementById('productChart').getContext('2d');
+    const productChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Quantity Left',
+                data: quantities,
+                backgroundColor: '#012970',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        },
+    });
+</script>

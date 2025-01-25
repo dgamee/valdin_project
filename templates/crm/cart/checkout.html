@@ -1,0 +1,170 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block page_title %}Cart {% endblock page_title %}
+
+{% block title %}Cart / Checkout{% endblock title %}
+
+{% block content %}
+
+
+
+    <div class="container">
+        <!-- Heading -->
+        <h2 class="text-center">Checkout form</h2>
+
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-7 mb-4">
+                <!--Card-->
+                <div class="card p-4">
+                    <!--Grid row-->
+                    <div class="row mb-3">
+                        <!--Grid column-->
+                        <div class="col-md-6 mb-2">
+                            <!--firstName-->
+                            <div class="form-outline">
+                                <label class="form-label" for="typeText">First name</label>
+                                <input type="text" id="typeText" class="form-control" value="{{ user.first_name }}" disabled />
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-md-6 mb-2">
+                            <!--lastName-->
+                            <div class="form-outline">
+                                <label class="form-label" for="typeText">Last name</label>
+                                <input type="text" id="typeText" class="form-control" value="{{ user.last_name }}" disabled />
+                            </div>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+
+                    <!--Username-->
+                    <div class="input-group mb-4">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="{{ user.username }}"  disabled/>
+                    </div>
+
+                    <!--email-->
+                    <p class="mb-0">
+                        Email
+                    </p>
+                    <div class="form-outline mb-4">
+                         <input type="email" class="form-control" placeholder="youremail@example.com" aria-label="youremail@example.com" aria-describedby="basic-addon1" value="{{ user.email }}" disabled />
+                    </div>
+
+                    <hr />
+
+
+                    <div class="my-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked />
+                            <label class="form-check-label" for="flexRadioDefault1"> Credit card </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                            <label class="form-check-label" for="flexRadioDefault2"> Debit card </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
+                            <label class="form-check-label" for="flexRadioDefault3"> Paypal </label>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <p class="mb-0">
+                                Name on card
+                            </p>
+                            <div class="form-outline">
+                                <input type="text" class="form-control"/>
+                                <div class="form-helper">Full name as displayed on card</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <p class="mb-0">
+                                Credit card number
+                            </p>
+                            <div class="form-outline">
+                                <input type="text" class="form-control" />                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <p class="mb-0">
+                                Expiration
+                            </p>
+                            <div class="form-outline">
+                                <input type="text" class="form-control" />
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <p class="mb-0">
+                                CVV
+                            </p>
+                            <div class="form-outline">
+                                <input type="text" class="form-control" />
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-4" />                    
+                  <button class="btn btn-primary" type="button">Make Payment</button>
+                </div>
+                <!--/.Card-->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-5 mb-4">
+                <!-- Heading -->
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Your cart</span>
+                </h4>
+
+                <!-- Cart -->
+                <ul class="list-group mb-3">
+
+                    {% for product_id, item in cart_data.items %}
+
+                    
+
+                    
+
+
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <h6 class="my-0">Name: <a class="text-center" href="{% url 'product_detail' pk=product_id %}">{{ item.name }}</a></h6>
+                            <h3></h3>
+                            <span>  Total: &#8358;{{ item.quantity|mul:item.price|floatformat:2 }} </span>
+                        </div>
+                        <span class="text-muted">Quantity: {{ item.quantity }}</span>
+                        <span class="text-muted">&#8358;{{ item.price }}</span>
+                    </li>
+
+
+
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Grand Total (&#8358;)</span>
+                        <strong>&#8358;{{ total_price|floatformat:2 }}</strong>
+                    </li>
+                </ul>
+                <!-- Cart -->
+
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
+    </div>
+
+<link href="{% static 'dashboard/assets/css/cart.css' %}" rel="stylesheet">
+<script src="{% static 'js/crm/cart/cart.js' %}"></script>
+{% endblock %}

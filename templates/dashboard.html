@@ -1,0 +1,124 @@
+{% extends 'crm/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock title %}
+
+{% block content %}
+<style>
+    .fix_image {
+        width: 100px;
+        height: 100px;
+        object-fit: fill;
+    }
+</style>
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                
+                {% include "./crm/cards.html" %}
+
+                {% include 'crm/chart_template.html' %}
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="card">
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Filter</h6>
+                        </li>
+        
+                        <li><a class="dropdown-item" href="#">Today</a></li>
+                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                      </ul>
+                    </div>
+        
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Activity <span>| Today</span></h5>
+                        <div class="activity">
+                        {% for activity in latest_activities %} 
+                            <div class="activity-item d-flex">
+                            <div class="activite-label">{{ activity.timestamp|timesince }} ago</div>
+                            <i class="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
+                            <div class="activity-content">
+                                {{ activity.details }}
+                            </div>
+                            </div><!-- End activity item-->
+                        {% endfor %}
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Latest Clients</h5>
+                        <section class="section contact">
+                            <div class="row gy-1">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        {% for client in latest_client %}
+                                        <div class="col-lg-4">
+                                            <div class="info-box card">
+                                                <img src="{%  static 'dashboard/assets/img/profile-img.jpg' %}" alt="Profile" class="fix_image rounded-circle">
+                                                <h3><a class="text-center" href="{{ client.get_absolute_url }}" >{{ client.name }}</a></h3>
+                                                <p class="date">{{client.phone_number}}</p>
+                                                <div class="social-links mt-2">
+                                                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Latest Products</h5>
+                        <section class="section contact">
+                            <div class="row gy-1">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        {% for product in latest_product %}
+                                        <div class="col-lg-4">
+                                            <div class="info-box card">
+                                                {% if product.image %}
+                                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="fix_image rounded-circle"/>
+                                                {% else %}
+                                                <img src="{%  static 'dashboard/assets/img/profile-img.jpg' %}" alt="Profile" class="fix_image rounded-circle">
+                                                {% endif %}
+                                                <h3><a class="text-center" href="{{ product.get_absolute_url }}" >{{ product.name }}</a></h3>
+                                                <p class="date">{{product.description}}</p>
+                                                <p class="bi bi-currency-dollar">{{ product.price }}</p>
+                                                
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- {% include 'crm/paginator.html' %} -->
+{% endblock content %}

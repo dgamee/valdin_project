@@ -1,0 +1,91 @@
+{% extends "../base.html" %}
+
+{% block page_title %}Products {% endblock page_title %}
+
+{% block title %}Product / Add Product{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Add New Product</h5>
+              <form class="row g-3" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                 <!-- Add this block to display form errors -->
+                 {% if form.errors %}
+                  <div class="alert alert-danger" role="alert">
+                    Please correct the errors below:
+                    <ul>
+                      {% for field in form %}
+                        {% for error in field.errors %}
+                          <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+
+                <div class="col-12">
+                  <label  class="form-label">Product Name</label>
+                  {{ form.name }}
+                </div>
+                <div class="col-12">
+                  <label  class="form-label">Category</label>
+                  {{ form.category }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    {{ form.description }}
+                  </div>
+                <div class="col-12">
+                  <label  class="form-label">Quantity</label>
+                  {{ form.quantity_supplied }}
+                </div>
+                <div class="col-12">
+                  <label  class="form-label">Quantity Left</label>
+                  {{ form.quantity_left }}
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Price</label>
+                  {{ form.price }}
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Image</label>
+                    {{ form.image }}
+                </div>
+                <!-- <div class="col-12">
+                    <label class="form-label">Additional Image</label>
+                    {{ form.other_images }}
+                </div> -->
+                <div class="text-center">
+                  <button type="submit" class="btn btn-info">Save</button>
+                  <button type="reset" class="btn btn-danger">Reset</button>
+                </div>
+              </form>
+        
+            </div>
+          </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Change the ID below to match your actual form field ID
+            $("#id_other_images").on("change", function () {
+                var fileList = $(this)[0].files;
+                var fileCount = fileList.length;
+                var displayText = fileCount > 1 ? fileCount + " files selected" : fileList[0].name;
+                $(".custom-file-label").text(displayText);
+            });
+        });
+    </script>
+{% endblock content %}
+
+
+

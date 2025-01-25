@@ -1,0 +1,138 @@
+{% extends 'crm/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+
+{% block content %}
+
+  <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+          
+
+            {% include 'crm/cards.html' %}
+
+
+            {% if messages %}
+              <div class="messages">
+                {% for message in messages %}
+                  {% if message.tags == 'success' %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% elif message.tags == 'error' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body text-bg-info">
+                  <h5 class="card-title">Recent Client</h5>
+                  <table class="table table-info table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for client in latest_client %}
+                      <tr>
+                        <th scope="row"><a href="{% url 'client_detail' client.pk %}">{{ client.pk }}</a></th>
+                        <td><a href="#" class="text-primary"></a>{{ client.name }}</td>
+                        <td> {{ client.email }}</td>
+                        <td>${{ client.phone_number }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
+
+
+
+            <!-- Top Selling -->
+            <div class="col-12">
+              <div class="card top-selling overflow-auto">
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Recent Product</h5>
+
+                  <table class="table table-borderless icon">
+                    <thead>
+                      <tr>
+                        <th scope="col">Preview</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      {% for product in latest_product %}
+                      <tr>
+                        <th scope="row"><a href="#"><img src="{{ product.image.url }}" alt=""></a></th>
+                        <td><a href="#" class="text-primary fw-bold">{{ product.name }}</a></td>
+                        <td>${{ product.price }}</td>
+                        <td> 
+                          <span>
+                            <a href=""><i class="bi bi-pencil-fill"> </i></a> | 
+
+                          <a href=""><i class="bi bi-trash-fill"> </i></a>
+                          </span>
+                          
+                        </td>
+                      </tr>
+                      {% endfor %}
+
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Top Selling -->
+
+          </div>
+        </div>
+        
+        <!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        {% include "crm/right_col.html" %}
+
+        <!-- End Right side columns -->
+
+      </div>
+  </section>
+
+{% endblock content %}

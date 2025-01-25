@@ -1,0 +1,26 @@
+{% extends "../base.html" %}
+
+{% block page_title %}Cart {% endblock page_title %}
+
+{% block title %}Cart / Delete Cart Product{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-center">Delete Cart Product</h5>
+              <form class="row g-3" action="" method="post">{% csrf_token %}
+                    <p>Are you sure you want to delete the product "{{ product.name }}" ?</p>
+                <div class="text-center">
+                    <a href="{% url 'view_cart' %}" class="btn btn-info">Cancel</a>
+                    <button class="btn btn-danger ml-2" type="submit">Confirm</button>
+                </div>
+        
+            </div>
+          </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+{% endblock content %}

@@ -1,0 +1,80 @@
+{% extends '../base.html' %}
+
+{% block page_title %}Clients {% endblock page_title %}
+
+{% block title %}Client / View Client{% endblock title %}
+
+{% block content %}
+  <div class="col-lg-2 col-md-2 col-sm-2"></div>
+  <div class="col-lg-8 col-md-8 col-sm-8">
+    <div class="card">
+        <div class="card-body pt-3">
+          <div class="tab-content pt-2">
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+              <h5 class="card-title text-center">Client Details</h5>
+    
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Name</div>
+                <div class="col-lg-9 col-md-8">{{ client.name }}</div>
+              </div>
+    
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Email</div>
+                <div class="col-lg-9 col-md-8">{{ client.email }}</div>
+              </div>
+    
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Phone</div>
+                <div class="col-lg-9 col-md-8">{{ client.phone_number }}</div>
+              </div>
+    
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Address</div>
+                <div class="col-lg-9 col-md-8">{{ client.address }}</div>
+              </div>
+              {% if client.social_media_links %}
+              {% endif %}
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Facebook</div>
+                <div class="col-lg-9 col-md-8">
+                    <a href="https://facebook.com/{{ client.facebook }}" target="_blank">{{ client.facebook }}</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Instagram</div>
+                <div class="col-lg-9 col-md-8">
+                    <a href="https://instagram.com/{{ client.instagram }}" target="_blank">{{ client.instagram }}</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Twitter</div>
+                <div class="col-lg-9 col-md-8">
+                    <a href="https://x.com/{{ client.twitter }}" target="_blank">{{ client.twitter }}</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Linkedin</div>
+                <div class="col-lg-9 col-md-8">
+                    <a href="https://linkedin.com/{{ client.linkedin }}" target="_blank">{{ client.linkedin }}</a>
+                </div>
+              </div>
+              
+            </div>
+            
+          </div>
+            <br><br>
+            <div class="text-center">
+              <a href="{% url 'list_client' %}" class="btn btn-primary">Back</a>
+              <a class="btn btn-info" href="{% url 'edit_client' client.pk %}">Edit</a>
+            </div>
+            
+            
+        </div>
+      </div>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2"></div>
+
+
+  
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Sign Up{% endblock %}
+
+
+
+{% block content %}
+<br><br>
+
+
+<div class="container mt-5">
+  <div class="card p-3 login-border">
+      <span class="mt-3 text-center text-pulse"><strong>Sign Up</strong></span>
+      <form class="store-color" method="post" autocomplete="off" novalidate>{% csrf_token %}
+          
+
+          {{form | crispy}}
+
+          <button class="btn btn-primary" type="submit">Sign Up</button>
+          <p></p>
+          <a class="btn-sm" href="{% url 'home' %}">Back</a>
+      </form>
+  </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block callaction %}
+{% endblock callaction %}

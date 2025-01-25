@@ -1,0 +1,121 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block page_title %}Cart {% endblock page_title %}
+
+{% block title %}Cart / View Cart{% endblock title %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        {% if cart_data %}
+        <div class="col-xl-8">
+            {% for product_id, item in cart_data.items %}
+            <div class="card border shadow-none">
+                <div class="card-body">
+                    <div class="d-flex align-items-start border-bottom pb-3">
+                        <div class="me-4">
+                            <br>
+                            <img src="{{ item.image_url }}" alt="{{ item.name }}" class="avatar-lg rounded">
+                        </div>
+                        <div class="flex-grow-1 align-self-center overflow-hidden">
+                            <div>
+                                <br>
+                                <h3 class="text-truncate font-size-28" style="text-transform: capitalize;" ><a class="text-center" href="{% url 'product_detail' pk=product_id %}">{{ item.name }}</a></h3>
+                                <p>{{ item.description }}</p>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 ms-2">
+                            <ul class="list-inline mb-0 font-size-16">
+                                <br>
+                                <li class="list-inline-item">
+                                    <button  id="delete-product" href="{% url 'delete_cart_product' pk=product_id %}" class="btn btn-danger shadow-0" data-product="{{ product_id }}"> <i class="me-1 bi bi-trash-fill"></i></button>
+                                   
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mt-3">
+                                    <p class="text-muted mb-2">Price</p>
+                                    <h5 class="mb-0 mt-2">&#8358;{{ item.price }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="mt-3">
+                                    <p class="text-muted mb-2">Quantity</p>
+                                    <div class="d-inline-flex">
+                                        <input type="number" class="form-control" value="{{ item.quantity }}" min="1" max="{{ item.quantity_left }}" id="quantity-{{ product_id }}" style="margin-right: 10px;" />
+                                        <button class="btn btn-info update-quantity" data-product-id="{{ product_id }}">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mt-3">
+                                    <p class="text-muted mb-2">Total</p>
+                                    <h5>&#8358;{{ item.quantity|mul:item.price|floatformat:2 }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row my-4">
+                <div class="col-sm-6">
+                    <a href="{% url 'list_product' %}" class="btn btn-secondary ">
+                        <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-end mt-2 mt-sm-0">
+                        <a href="{% url 'checkout' %}" class="btn btn-success checkout">
+                            <i class="bi bi-cart4"></i> Checkout </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="mt-5 mt-lg-0">
+                <div class="card border shadow-none">
+                    <div class="card-header bg-transparent border-bottom py-3 px-4">
+                        <h5 class="font-size-16 mb-0">Order Summary</h5>
+                    </div>
+                    <div class="card-body p-4 pt-2">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>Sub Total :</td>
+                                        <td class="text-end">&#8358;{{ total_price|floatformat:2 }}</td>
+                                    </tr>
+                                    <!-- Additional rows for discount, shipping charge, estimated tax can be added here -->
+                                    <tr class="bg-light">
+                                        <th>Total :</th>
+                                        <td class="text-end">
+                                            <span class="fw-bold">
+                                                &#8358;{{ total_price|floatformat:2 }} <!-- Adjust total if you have discount or other charges -->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+</div>
+
+<link href="{% static 'dashboard/assets/css/cart.css' %}" rel="stylesheet">
+<script src="{% static 'js/crm/cart/cart.js' %}"></script>
+{% endblock %}
